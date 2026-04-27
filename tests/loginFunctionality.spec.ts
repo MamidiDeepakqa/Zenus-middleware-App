@@ -1,18 +1,14 @@
 import { expect, test } from "@playwright/test";
 
 test.beforeEach('validate launching the build on QA environment', async ({ page }) => {
-    // await page.goto("zb-qa-mgmt-web-eastus-001.blueglacier-24b50f61.eastus.azurecontainerapps.io")
     await page.goto("https://zb-qa-mgmt-web-eastus-001.blueglacier-24b50f61.eastus.azurecontainerapps.io/")
     await page.waitForTimeout(2000)
 })
-
 
 test('Verify login with Valid Credentials', async ({ page }) => {
     await page.locator('#email').fill("mdeepak.purpleplum@zenus.com")
     await page.locator('#password').fill("Pranitha@321")
     await page.waitForTimeout(1000)
-    // const buttonName = await page.getByRole('button', { name: "Sign in" }).textContent()
-    // expect(buttonName).toEqual("Sign in")
     await page.getByRole('button', { name: "Sign in" }).click()
     await page.waitForTimeout(2000)
     const actualDashboardText = await page.locator('[class="font-bold mb-6 text-4xl sm:text-5xl md:text-6xl lg:text-6xl text-surface-900 dark:text-surface-0"]').textContent()
@@ -75,8 +71,6 @@ test('Verify login with unregistered Credentials', async ({ page }) => {
     await page.locator('#email').fill("mdeepak@zenus.com")
     await page.locator('#password').fill("Ganesh")
     await page.waitForTimeout(1000)
-    // const buttonName = await page.getByRole('button', { name: "Sign in" }).textContent()
-    // expect(buttonName).toEqual("Sign in")
     await page.getByRole('button', { name: "Sign in" }).click()
     await page.waitForTimeout(2000)
     const actualUnregisteredUserAccountMessage = await page.getByText('seem to find your account').textContent()
