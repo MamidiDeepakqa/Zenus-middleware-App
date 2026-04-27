@@ -15,7 +15,7 @@ test('validate the playwright locatorss', async ({ page }) => {
 
 test('validate the user facing locators', async ({ page }) => {
     page.getByRole("button", { name: "Sign In" })
-    page.getByLabel('labelName')
+    page.getByLabel('Email Address')
     page.getByPlaceholder('placeholderText')
     page.getByText('simpleText')
     page.getByTitle('pageTitle')

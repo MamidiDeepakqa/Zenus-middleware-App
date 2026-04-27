@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, devices } from "@playwright/test";
 
 test.beforeEach('validate launching the build on QA environment', async ({ page }) => {
     await page.goto("https://zb-qa-mgmt-web-eastus-001.blueglacier-24b50f61.eastus.azurecontainerapps.io/")
@@ -6,8 +6,8 @@ test.beforeEach('validate launching the build on QA environment', async ({ page 
 })
 
 test('Verify login with Valid Credentials', async ({ page }) => {
-    await page.locator('#email').fill("mdeepak.purpleplum@zenus.com")
-    await page.locator('#password').fill("Pranitha@321")
+    await page.locator('#email').fill(process.env.USERNAME!)
+    await page.locator('#password').fill(process.env.PASSWORD!)
     await page.waitForTimeout(1000)
     await page.getByRole('button', { name: "Sign in" }).click()
     await page.waitForTimeout(2000)
@@ -16,8 +16,8 @@ test('Verify login with Valid Credentials', async ({ page }) => {
 })
 
 test('Verify login with Incorrect username and valid password', async ({ page }) => {
-    await page.locator('#email').fill("mdeepak.purpleplum@zenus")
-    await page.locator('#password').fill("Pranitha@321")
+    await page.locator('#email').fill(process.env.USERNAME!)
+    await page.locator('#password').fill(process.env.PASSWORD!)
     await page.waitForTimeout(1000)
     await page.getByRole('button', { name: "Sign in" }).click()
     await page.waitForTimeout(2000)
@@ -30,7 +30,6 @@ test('Verify login with Incorrect password and valid username', async ({ page })
     await page.locator('#password').fill("P@321")
     await page.waitForTimeout(1000)
     await page.getByRole('button', { name: "Sign in" }).click()
-    await page.waitForTimeout(2000)
     const actualInvalidPasswordMessage = await page.getByText('Your password is incorrect').textContent()
     expect(actualInvalidPasswordMessage).toEqual("Your password is incorrect")
 })
